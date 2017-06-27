@@ -19,8 +19,8 @@ using namespace std;
 
 using namespace robotics;
 
-
-class Robot {
+class Robot
+{
 private:
 	HamsterAPI::Hamster * hamster;
 	RandomWalk rand_walk;

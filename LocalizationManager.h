@@ -19,8 +19,10 @@
 using namespace std;
 using namespace HamsterAPI;
 
-namespace manager{
-class LocalizationManager {
+namespace manager
+{
+class LocalizationManager
+{
 private:
 	vector<Particle *> particles;
 	const OccupancyGrid &ogrid;
@@ -31,8 +33,9 @@ public:
 	void initParticles();
 	void updateParticles(HamsterAPI::LidarScan scan);
 	virtual ~LocalizationManager();
-	void createNewParticles(Particle* par,vector<Particle *>* newParticles);
-	const vector<Particle*>& getParticles() const {
+	void createNewParticles(Particle* par, vector<Particle *>* newParticles);
+	const vector<Particle*>& getParticles() const
+	{
 		return particles;
 	}
 };

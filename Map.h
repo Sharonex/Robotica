@@ -15,7 +15,8 @@ using namespace std;
 using namespace HamsterAPI;
 using namespace cv;
 
-class Map {
+class Map
+{
 private:
 	//const OccupancyGrid ogrid;
 	const OccupancyGrid &ogrid;

@@ -11,11 +11,11 @@
 #include <HamsterAPIClientCPP/Hamster.h>
 #include <iostream>
 
-
 using namespace HamsterAPI;
 using namespace std;
 
-class Particle {
+class Particle
+{
 public:
 	float x;
 	float y;
@@ -24,9 +24,9 @@ private:
 	float belief;
 public:
 	Particle();
-	Particle(float x,float y,float teta);
-	float update(HamsterAPI::LidarScan scan,const OccupancyGrid& ogrid);/*float x,float y,float teta,float belief*/
-	Particle* createParticle(int right_left_X,int up_down_Y);
+	Particle(float x, float y, float teta);
+	float update(HamsterAPI::LidarScan scan, const OccupancyGrid& ogrid);/*float x,float y,float teta,float belief*/
+	Particle* createParticle(int right_left_X, int up_down_Y);
 	float getBelief();
 	bool operator!=(const Particle p) const;
 	virtual ~Particle();

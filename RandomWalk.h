@@ -15,8 +15,10 @@ using namespace std;
 #ifndef RANDOMWALK_H_
 #define RANDOMWALK_H_
 
-namespace robotics{
-class RandomWalk{
+namespace robotics
+{
+class RandomWalk
+{
 private:
 	HamsterAPI::Hamster * hamster;
 	HamsterAPI::LidarScan scan;
@@ -38,7 +40,8 @@ public:
 	void moveBackwards();
 	void stopMoving();
 	void turning();
-	void getScansBetween(double min, double max, std::vector<double> & distances);
+	void getScansBetween(double min, double max,
+			std::vector<double> & distances);
 	double CalcMHWScore(vector<double> scores);
 	bool willCollide(std::vector<double> distances, int angle_from_center);
 	void moveLeftBack();
