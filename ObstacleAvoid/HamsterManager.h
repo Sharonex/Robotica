@@ -4,7 +4,7 @@ class HamsterManager
 {
     public:
     
-    HamsterManager() : m_hamster(1);
+    HamsterManager() : m_hamster(1) {}
 
     void getScansBetween(double min, double max, std::vector<double> & distances);
 
@@ -35,5 +35,7 @@ class HamsterManager
 
     void stopMoving();
 
+    bool isConnected();
+
     HamsterAPI::Hamster m_hamster;
-}
+};
