@@ -12,40 +12,7 @@
 using namespace std;
 using namespace HamsterAPI;
 
-typedef enum __SECTOR_COLOR 
-{
-	WHITE = 255, BLACK = 0, GRAY = 128
-} SECTOR_COLOR;
-
-SECTOR_COLOR GetSectorColor(OccupancyGrid& ogrid, int start_x, int start_y, int sector_size) 
-{
-	int pixel_sum = 0;
-
-	int height = ogrid.getHeight() >= (start_y + sector_size) ?
-					sector_size : ogrid.getHeight();
-	int width =	ogrid.getWidth() >= (start_x + sector_size) ?
-					sector_size : ogrid.getWidth();
-
-	for (int i = start_x; i < start_x + height; i += 1) 
-	{
-		for (int j = start_y;  j < start_y + width; j += 1) 
-		{
-			int cell_val = ogrid.getCell(i, j);
-
-			if (cell_val != CELL_FREE)
-			{
-				pixel_sum++;
-			}
-		}
-	}
-
-	if (pixel_sum == 0)
-		return WHITE;
-	else if (pixel_sum == sector_size*sector_size)
-		return BLACK;
-
-	return GRAY;
-}
+HamsterAPI::Hamster* hamster;
 
 /***
  * Random walk. Turn to the better way.
@@ -54,48 +21,39 @@ int evenDerechA1()
 {
 	try 
 	{
-		HamsterManager hamster;
+		HamsterManager hamster_man;
 
 		cv::namedWindow("OccupancyGrid-view");
-		while (hamster.isConnected()) 
+		while (hamster_man.isConnected())
 		{
 			try 
 			{
-				if (hamster.isFrontFree()) 
+				if (hamster_man.isFrontFree())
 				{
-					hamster.moveForward();
+					hamster_man.moveForward();
 				}
 				else 
 				{
-					hamster.stopMoving();
-					if (hamster.isLeftFree() || hamster.isRightFree()) 
+					hamster_man.stopMoving();
+					if (hamster_man.isLeftFree() || hamster_man.isRightFree())
 					{
-						if (hamster.getRightCollisions() < hamster.getLeftCollisions())
-							hamster.turnRight();
+						if (hamster_man.getRightCollisions() < hamster_man.getLeftCollisions())
+							hamster_man.turnRight();
 						else
-							hamster.turnLeft();
+							hamster_man.turnLeft();
 					} 
-					else if (hamster.isBackFree())
+					else if (hamster_man.isBackFree())
 					{
-						hamster.moveBackwards();
+						hamster_man.moveBackwards();
 					}
 					else
 					{
 						HamsterAPI::Log::i("Client", "I am stuck!");
 					}
 				}
-		/*	}
-				 else if (isLeftFree())
-				 turnLeft();
-				 else if (isRightFree())
-				 turnRight();
-				 else if (isBackFree())
-				 moveBackwards();
-				 else
-				 HamsterAPI::Log::i("Client", "I am stuck!");
-				 }
-				 */
-			} catch (const HamsterAPI::HamsterError & message_error) {
+			} 
+			catch (const HamsterAPI::HamsterError & message_error) 
+			{
 				HamsterAPI::Log::i("Client", message_error.what());
 			}
 		}
@@ -108,65 +66,94 @@ int evenDerechA1()
 	return 0;
 }
 
-int evenDerechB(OccupancyGrid& ogrid, int robotsize) 
+bool safe_paint(cv::Mat& m, int x, int y)
 {
-	try 
+	return x >= 0 && x < m.cols && y >= 0 && y < m.rows;
+}
+
+void paintInNewMap(int x, int y, cv::Mat& m, int radius, unsigned char color)
+{
+	for(int i = x-radius; i < x + radius; i++)
+	{
+		for (int j = y-radius; j < y + radius; j++)
+		{
+			if (safe_paint(m,i,j))
+			{
+				m.at<unsigned char>(i,j) = color;
+			}
+		}
+	}
+}
+
+int evenDerechB(OccupancyGrid& ogrid, int robotsize)
+{
+	try
 	{
 		cv::namedWindow("OccupancyGrid-view");
-		int width = ogrid.getWidth();
-		int height = ogrid.getHeight();
-		unsigned char pixel = 0;
 
-		cv::Mat m = cv::Mat(width / robotsize, height  / robotsize, CV_8UC1);
-		printf("matrix dimensions: (%d, %d)\n", height, width);
+		int newRes = 1 * robotsize;
+		int rad = newRes / 2;
 
-		// get cell status and init cell color
-		for (int i = 0; i < height; i += 1)
-			for (int j = 0; j < width; j += 1) 
+		OccupancyGrid newOg = hamster->getSLAMMap();
+
+		int newWidth = ogrid.getWidth() * rad;
+		int newHeight = ogrid.getHeight() * rad;
+		cv::Mat m = cv::Mat(newWidth, newHeight, CV_8UC1);
+
+		for (int i = 0; i < newWidth; i++)
+		{
+			for (int j = 0; j < newHeight; j++)
 			{
-
-				 pixel = 0;
-				 if (ogrid.getCell(i, j) == CELL_OCCUPIED)
-					 pixel = 255;
-
-				 //cvmSet(M, i, j, pixel);
-				 m.at<unsigned char>(i, j) = pixel;
-
-				pixel = GetSectorColor(ogrid, i, j, robotsize);
+				m.at<unsigned char>(i, j) = CELL_FREE;
 			}
+		}
 
-				// Show map
-			cv::imshow("OccupancyGrid-view", m);
-			cv::waitKey(1000);
-	}
+		/*for (int i = 0; i < ogrid.getWidth(); i++)
+		{
+			for (int j = 0; j < ogrid.getHeight(); j++)
+			{
+				if (ogrid.getCell(i, j) != CELL_FREE)
+				{
+					paintInNewMap(i,j,m,rad,static_cast<unsigned char>(ogrid.getCell(i, j)));
+				}
+			}
+		}*/
+
+		sleep(4);
+		printf("AAAAAAAAHHHHHHH\r\n");
+		cv::imshow("OccupancyGrid-view", m);
+		cv::waitKey(1000);
+	} 
 	catch (const HamsterAPI::HamsterError & connection_error)
 	{
 		HamsterAPI::Log::i("Client", connection_error.what());
 	}
-	return 0;
 
+	return 0;
 }
 
-int main() 
+int main()
 {
-	/*try
+	hamster = new HamsterAPI::Hamster(1);
+
+	try
 	{
 		cv::namedWindow("OccupancyGrid-view");
-		HamsterAPI::Hamster* hamster = new HamsterAPI::Hamster(1);
+
 		sleep(3);
 
 		while (hamster->isConnected())
 		{
 			OccupancyGrid og = hamster->getSLAMMap();
-			//evenDerechB(og, 4);
-			sleep(3);
+			evenDerechB(og, 2);
+			sleep(100000);
+			return 0;
 		}
-	} 
-	catch (const HamsterAPI::HamsterError & connection_error) 
+	} catch (const HamsterAPI::HamsterError & connection_error)
 	{
+		hamster->disconnect();
 		HamsterAPI::Log::i("Client", connection_error.what());
-	}*/
-	evenDerechA1();
+	}
 
 	return 0;
 }

@@ -37,5 +37,6 @@ class HamsterManager
 
     bool isConnected();
 
+    HamsterAPI::OccupancyGrid getSLAMMap() { return m_hamster.getSLAMMap(); }
     HamsterAPI::Hamster m_hamster;
 };

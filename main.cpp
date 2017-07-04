@@ -294,15 +294,7 @@ int evenDerechB(OccupancyGrid& ogrid, int robotsize)
 	try
 	{
 		cv::namedWindow("OccupancyGrid-view");
-		/*OccupancyGridCreator creator;
-		 creator.setOccupancyGrid(const_cast<const OccupancyGrid&>(ogrid));
-		 creator.resolution = ogrid.getResolution();
-		 creator.h = ogrid.getHeight();
-		 creator.w = ogrid.getWidth();
-		 creator.resize();
 
-		 OccupancyGrid new_grid = creator.create();
-		 */
 		unsigned char pixel = 0;
 
 		int newRes = ogrid.getResolution() * robotsize;
