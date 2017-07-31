@@ -1,4 +1,4 @@
-#include "HamsterManager.h"
+/*#include "HamsterManager.h"
 
 using namespace HamsterAPI;
 
@@ -135,4 +135,4 @@ void HamsterManager::stopMoving() {
 bool HamsterManager::isConnected()
 {
     return m_hamster.isConnected();
-}
+}*/

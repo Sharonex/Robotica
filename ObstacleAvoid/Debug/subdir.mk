@@ -4,12 +4,36 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../HamsterManager.cpp \
+../LocalizationManager.cpp \
+../Map.cpp \
+../PathPlanner.cpp \
+../RandomWalk.cpp \
+../Robot.cpp \
+../RobotMovement.cpp \
+../WayPointsManager.cpp \
 ../main.cpp 
 
 OBJS += \
+./HamsterManager.o \
+./LocalizationManager.o \
+./Map.o \
+./PathPlanner.o \
+./RandomWalk.o \
+./Robot.o \
+./RobotMovement.o \
+./WayPointsManager.o \
 ./main.o 
 
 CPP_DEPS += \
+./HamsterManager.d \
+./LocalizationManager.d \
+./Map.d \
+./PathPlanner.d \
+./RandomWalk.d \
+./Robot.d \
+./RobotMovement.d \
+./WayPointsManager.d \
 ./main.d 
 
 

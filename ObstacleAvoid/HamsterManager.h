@@ -1,3 +1,4 @@
+/*
 #include <HamsterAPIClientCPP/Hamster.h>
 
 class HamsterManager
@@ -38,4 +39,4 @@ class HamsterManager
     bool isConnected();
 
     HamsterAPI::Hamster m_hamster;
-};
+};*/

@@ -16,8 +16,7 @@ using namespace std;
 LocalizationManager::LocalizationManager(const OccupancyGrid &ogrid,
 		Hamster *hamster) :
 		ogrid(ogrid), hamster(hamster) {
-	// TODO Auto-generated constructor stub
-	cout << "width: " << ogrid.getWidth() << ", height: " << ogrid.getHeight()
+		cout << "width: " << ogrid.getWidth() << ", height: " << ogrid.getHeight()
 			<< endl;
 }
 

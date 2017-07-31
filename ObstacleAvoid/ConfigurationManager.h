@@ -23,9 +23,9 @@ public:
 		s_instance = new ConfigurationManager(Pose(0,0,0),cv::Point2f(3,0),cv::Size2f(0.20,0.20),0.05);
 	}
 
-	static void Init(std::string* fileName)
+	static void Init(std::string fileName)
 	{
-		s_instance = new ConfigurationManager(Pose(0,0,0),cv::Point2f(3,0),cv::Size2f(0.20,0.20),0.05);
+		s_instance = new ConfigurationManager(Pose(512,512,-60),cv::Point2f(558,488),cv::Size2f(0.20,0.20),0.05);
 	}
 
 	static Pose getStartPose()

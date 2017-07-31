@@ -14,6 +14,7 @@ struct Node {
 	float f;
 	float g;
 	float h;
+	bool finished;
 	Node *parent;
 };
 
