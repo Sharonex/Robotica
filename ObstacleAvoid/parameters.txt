@@ -1,0 +1,7 @@
+map: ~/Desktop/roboticLabMap.png
+startLocation: 512 512 -60
+goal: 558 488
+robotSize: 20
+StartLocationYaw: 180
+MapResolutionCM: 2.5
+GridResolutionCM: 10
