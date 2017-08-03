@@ -36,17 +36,12 @@ void Map::drawParticles(vector<Particle *> particles) {
 
 	for (int i = 0; i < particles.size(); i++) {
 		Particle *p = particles[i];
-		if (particles[i]->belief<0.55){
+		if (particles[i]->belief<0.25){
 			mat.at<cv::Vec3b>(p->j, p->i)[0] = 0;
 			mat.at<cv::Vec3b>(p->j, p->i)[1] = 0;
 			mat.at<cv::Vec3b>(p->j, p->i)[2] = 255;
 		}
 		else{
-			mat.at<cv::Vec3b>(p->j, p->i)[0] = 255;
-			mat.at<cv::Vec3b>(p->j, p->i)[1] = 0;
-			mat.at<cv::Vec3b>(p->j, p->i)[2] = 0;
-		}
-		if(i>=particles.size()-5) {
 			mat.at<cv::Vec3b>(p->j, p->i)[0] = 0;
 			mat.at<cv::Vec3b>(p->j, p->i)[1] = 255;
 			mat.at<cv::Vec3b>(p->j, p->i)[2] = 0;
